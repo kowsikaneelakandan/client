@@ -6,11 +6,11 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://realestate-26kt.onrender.com",
-        changeOrigin: true,
-        secure: false
-      },
+        changeOrigin: true, // Ensures the origin of the host header matches the target
+        rewrite: (path) => path.replace(/^\/api/, ""), // Removes '/api' from the proxy request if the backend doesn't expect it
+        secure: true, // Set to `true` since Render uses HTTPS
+      }
     },
   },
-
   plugins: [react()],
 });
